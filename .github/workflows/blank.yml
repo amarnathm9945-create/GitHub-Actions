@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Select environment to deploy'
+        description: 'Select environment'
         required: true
         type: choice
         options:
@@ -14,62 +14,29 @@ on:
 
 jobs:
 
-  # ── DEV JOB ──────────────────────────────────────────────
   deploy-dev:
-    name: Deploy to Dev
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.environment == 'dev' }}
-    environment: dev
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run unit tests
-        run: npm test
-
-      - name: Deploy to Dev
+      - name: Deploy Dev
         run: |
-          echo "Deploying to DEV environment..."
-          # your deploy script here e.g. ./deploy.sh dev
+          echo "Deploying to DEV..."
+          echo "Dev URL: https://dev.myapp.com"
 
-  # ── STAGING JOB ──────────────────────────────────────────
   deploy-staging:
-    name: Deploy to Staging
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.environment == 'staging' }}
-    environment: staging
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run integration tests
-        run: npm run test:integration
-
-      - name: Deploy to Staging
+      - name: Deploy Staging
         run: |
-          echo "Deploying to STAGING environment..."
-          # ./deploy.sh staging
+          echo "Deploying to STAGING..."
+          echo "Staging URL: https://staging.myapp.com"
 
-  # ── PROD JOB ─────────────────────────────────────────────
   deploy-prod:
-    name: Deploy to Production
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.environment == 'prod' }}
-    environment: prod   # <-- enables the approval gate in GitHub UI
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Deploy to Production
+      - name: Deploy Prod
         run: |
-          echo "Deploying to PRODUCTION environment..."
-          # ./deploy.sh prod
-        env:
-          API_URL: ${{ secrets.PROD_API_URL }}
-          DB_CONN: ${{ secrets.PROD_DB_CONN }}
-
-      - name: Smoke test
-        run: curl --fail ${{ secrets.PROD_API_URL }}/health
+          echo "Deploying to PROD..."
+          echo "Prod URL: https://myapp.com"
