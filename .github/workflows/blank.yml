@@ -32,9 +32,6 @@ jobs:
         run: |
           echo "Deploying to DEV environment..."
           # your deploy script here e.g. ./deploy.sh dev
-        env:
-          API_URL: ${{ secrets.DEV_API_URL }}
-          DB_CONN: ${{ secrets.DEV_DB_CONN }}
 
   # ── STAGING JOB ──────────────────────────────────────────
   deploy-staging:
@@ -54,9 +51,6 @@ jobs:
         run: |
           echo "Deploying to STAGING environment..."
           # ./deploy.sh staging
-        env:
-          API_URL: ${{ secrets.STAGING_API_URL }}
-          DB_CONN: ${{ secrets.STAGING_DB_CONN }}
 
   # ── PROD JOB ─────────────────────────────────────────────
   deploy-prod:
