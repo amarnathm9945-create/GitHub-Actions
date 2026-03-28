@@ -1,0 +1,22 @@
+name: Step Output Demo
+
+on: workflow_dispatch
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.generate_step.outputs.myvalue }}
+
+    steps:
+      - name: Generate value
+        id: generate_step
+        run: echo "myvalue=Amar" >> $GITHUB_OUTPUT
+
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: Build
+
+    steps:
+      - name: Display output from Build job
+        run: echo "The value from Build job is: ${{ needs.Build.outputs.result }}"
